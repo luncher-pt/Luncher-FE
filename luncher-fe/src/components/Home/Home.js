@@ -21,7 +21,7 @@ class Home extends React.Component {
     this.props.history.push('/updateSchool', { school: school });
   };
 
-  render() { 
+  render() {
     return (
       <div className="SchoolList">
         {!this.props.fetchingSchools ? (
