@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchingSchoolsAction , deletingSchoolAction } from '../actions';
+import { fetchingSchoolsAction, deletingSchoolAction } from '../../actions';
 //Todo: replace with real component when ready
-import School from "./School";
-import "./School.css";
+import School from '../School/School';
+import '../School/School.css';
 
 class Home extends React.Component {
   componentDidMount() {
