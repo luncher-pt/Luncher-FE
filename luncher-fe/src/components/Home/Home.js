@@ -14,40 +14,43 @@ class Home extends React.Component {
   deleteHandler = id => {
     this.props
       .deletingSchoolAction(id)
-      .then(() => this.props.history.push("/"));
-  }
+      .then(() => this.props.history.push('/'));
+  };
 
   editHandler = school => {
-    this.props.history.push("/updateSchool", {school : school} );
-  }
+    this.props.history.push('/updateSchool', { school: school });
+  };
 
   render() { 
     return (
       <div className="SchoolList">
-        {
-          !this.props.fetchingSchools 
-          ? this.props.schools.map(school => (<School key={school.id} school={school} editHandler={this.editHandler} deleteHandler={this.deleteHandler} />))
-          : <h4>Fetching schools ...</h4>
-        }
-        {
-          this.props.error && <p className="error"> { 
-            this.props.error
-          } </p> 
-        }
+        {!this.props.fetchingSchools ? (
+          this.props.schools.map(school => (
+            <School
+              key={school.id}
+              school={school}
+              editHandler={this.editHandler}
+              deleteHandler={this.deleteHandler}
+            />
+          ))
+        ) : (
+          <h4>Fetching schools ...</h4>
+        )}
+        {this.props.error && <p className="error"> {this.props.error} </p>}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ schools , fetchingSchools , error }) => ({
+const mapStateToProps = ({ schools, fetchingSchools, error }) => ({
   schools,
   fetchingSchools,
-  error
+  error,
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchingSchoolsAction , deletingSchoolAction }
+    { fetchingSchoolsAction, deletingSchoolAction }
   )(Home)
 );
