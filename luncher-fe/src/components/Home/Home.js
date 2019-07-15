@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchingSchoolsAction, deletingSchoolAction } from '../../actions';
-//Todo: replace with real component when ready
 import School from '../School/School';
 import '../School/School.css';
 
@@ -18,6 +17,7 @@ class Home extends React.Component {
   };
 
   editHandler = school => {
+    // single school page - updating funds etc - updateSchool route to be implemented.
     this.props.history.push('/updateSchool', { school: school });
   };
 
@@ -45,7 +45,7 @@ class Home extends React.Component {
 const mapStateToProps = ({ schools, fetchingSchools, error }) => ({
   schools,
   fetchingSchools,
-  error,
+  error
 });
 
 export default withRouter(

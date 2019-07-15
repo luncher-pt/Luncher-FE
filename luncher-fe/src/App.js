@@ -16,6 +16,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/admin" component={Admin} />
           <Route path="/login" component={Login} />
+          {/* single school route ( /updateSchool ) to be implemented */}
         </div>
       </Router>
     </main>
