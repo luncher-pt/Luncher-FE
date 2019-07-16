@@ -5,8 +5,22 @@
   }
   
   .School {
+    background-color:rgb(206, 233, 111);
+    width: 35%;
+    text-align: left;
+    margin: 4px 0;
+    padding: 8px;
+    color:  rgb(6, 4, 0);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border: 1px solid green;
   }
   
   .SchoolName {
+    color:  rgb(6, 4, 0);
+    font-weight: bold;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    width: max-content;
+    padding: 10px;
+    background-color: burlywood;
   }
   

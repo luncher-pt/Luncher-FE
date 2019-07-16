@@ -1,0 +1,6 @@
+-- https://github.com/luncher-pt/Luncher-BE/blob/master/Routes/api/registerRoute.js
+curl -vd '{ "name": "Billy2", "email": "Bill2@Billy.com", "password": "TacoMan", "admin": false, "donations": 0 }' -H "Content-Type: application/json" -X POST http://luncher-lambda-buildweek.herokuapp.com/register
+
+-- https://github.com/luncher-pt/Luncher-BE/blob/master/Routes/api/loginRoute.js
+
+curl -vd '{ "email": "Bill2@Billy.com", "password": "TacoMan" }' -H "Content-Type: application/json" -X POST http://luncher-lambda-buildweek.herokuapp.com/login/
