@@ -29,7 +29,7 @@ const API_URL = 'http://luncher-lambda-buildweek.herokuapp.com';
 export const loggingInAction = creds => dispatch => {
   dispatch({ type: LOGGING_IN });
   return axios
-    .post('http://<TBD>:<TBD>/login', creds)
+    .post(`${API_URL}/login`, creds)
     .then(resp => {
       localStorage.setItem('token', resp.data.payload);
       dispatch({ type: LOGGING_IN_SUCCESS });
