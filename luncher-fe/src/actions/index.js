@@ -43,6 +43,9 @@ export const registeringAction = creds => dispatch => {
     .post(`${API_URL}/register`, creds)
     .then(resp => {
       dispatch({ type: REGISTERING_SUCCESS });
+      dispatch(
+        loggingInAction({ email: creds.email, password: creds.password })
+      );
     })
     .catch(err => dispatch({ type: REGISTERING_FAILURE, error: err.message }));
 };
