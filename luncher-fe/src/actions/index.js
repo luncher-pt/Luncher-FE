@@ -34,7 +34,7 @@ export const loggingInAction = creds => dispatch => {
       localStorage.setItem('token', resp.data.payload);
       dispatch({ type: LOGGING_IN_SUCCESS });
     })
-    .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.message }));
+    .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
 };
 
 export const registeringAction = creds => dispatch => {
@@ -47,7 +47,7 @@ export const registeringAction = creds => dispatch => {
         loggingInAction({ email: creds.email, password: creds.password })
       );
     })
-    .catch(err => dispatch({ type: REGISTERING_FAILURE, error: err.message }));
+    .catch(err => dispatch({ type: REGISTERING_FAILURE, error: err.error }));
 };
 
 export const fetchingSchoolsAction = () => dispatch => {
