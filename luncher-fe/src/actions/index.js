@@ -23,7 +23,7 @@ export const UPDATING_SCHOOL_FAILURE = 'UPDATING_SCHOOL_FAILURE';
 export const loggingInAction = creds => dispatch => {
     dispatch({ type: LOGGING_IN });
     return axios
-                .post("http://<TBD>:<TBD>/login", creds)
+                .post("http://luncher-lambda-buildweek.herokuapp.com/login", creds)
                 .then(resp => {
                         localStorage.setItem("token", resp.data.payload);
                         dispatch({type: LOGGING_IN_SUCCESS});
@@ -37,7 +37,7 @@ export const loggingInAction = creds => dispatch => {
 export const fetchingSchoolsAction = () => dispatch => {
   dispatch({ type: FETCHING_SCHOOLS });
   return axios
-    .get('http://<TBD>:<TBD>/schools', {
+    .get('http://luncher-lambda-buildweek.herokuapp.com/schools', {
       headers: { Authorization: localStorage.getItem('token') },
     })
     .then(resp =>
@@ -51,7 +51,7 @@ export const fetchingSchoolsAction = () => dispatch => {
 export const addingSchoolAction = newSchool => dispatch => {
   dispatch({ type: ADDING_SCHOOL });
   return axios
-    .post('http://<TBD>:<TBD>/schools', newSchool, {
+    .post('http://luncher-lambda-buildweek.herokuapp.com/schools', newSchool, {
       headers: { Authorization: localStorage.getItem('token') },
     })
     .then(resp => dispatch({ type: ADDING_SCHOOL_SUCCESS, payload: resp.data }))
@@ -63,7 +63,7 @@ export const addingSchoolAction = newSchool => dispatch => {
 export const deletingSchoolAction = id => dispatch => {
   dispatch({ type: DELETING_SCHOOL });
   return axios
-    .delete(`http://<TBD>:<TBD>/schools/${id}`, {
+    .delete(`http://luncher-lambda-buildweek.herokuapp.com/schools/${id}`, {
       headers: { Authorization: localStorage.getItem('token') },
     })
     .then(resp =>
@@ -77,7 +77,7 @@ export const deletingSchoolAction = id => dispatch => {
 export const updatingSchoolAction = updatedSchool => dispatch => {
   dispatch({ type: UPDATING_SCHOOL });
   return axios
-    .put(`http://<TBD>:<TBD>/schools/${updatedSchool.id}`, updatedSchool, {
+    .put(`http://luncher-lambda-buildweek.herokuapp.com/schools/${updatedSchool.id}`, updatedSchool, {
       headers: { Authorization: localStorage.getItem('token') },
     })
     .then(resp =>
