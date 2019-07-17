@@ -43,10 +43,21 @@ export const registeringAction = creds => dispatch => {
     .post(`${API_URL}/register`, { ...creds, admin: true, donations: 0 })
     .then(res => {
       dispatch({ type: REGISTERING_SUCCESS });
-      console.log('success');
-      dispatch(
-        loggingInAction({ email: creds.email, password: creds.password })
-      );
+      dispatch({ type: LOGGING_IN });
+      axios
+        .post(`${API_URL}/login`, {
+          email: creds.email,
+          password: creds.password,
+        })
+        .then(resp => {
+          localStorage.setItem('token', resp.data.token);
+          dispatch({ type: LOGGING_IN_SUCCESS });
+          dispatch(addingSchoolAction({ ...creds, admin_id: resp.data.id }));
+        })
+        .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
+      // dispatch(
+      //   loggingInAction({ email: creds.email, password: creds.password })
+      // );
     })
     .catch(err => {
       dispatch({ type: REGISTERING_FAILURE, error: err });
