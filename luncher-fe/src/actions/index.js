@@ -31,7 +31,7 @@ export const loggingInAction = creds => dispatch => {
   return axios
     .post(`${API_URL}/login`, creds)
     .then(resp => {
-      localStorage.setItem('token', resp.data.payload);
+      localStorage.setItem('token', resp.data.token);
       dispatch({ type: LOGGING_IN_SUCCESS });
     })
     .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
@@ -40,14 +40,17 @@ export const loggingInAction = creds => dispatch => {
 export const registeringAction = creds => dispatch => {
   dispatch({ type: REGISTERING });
   return axios
-    .post(`${API_URL}/register`, creds)
-    .then(resp => {
+    .post(`${API_URL}/register`, { ...creds, admin: true, donations: 0 })
+    .then(res => {
       dispatch({ type: REGISTERING_SUCCESS });
+      console.log('success');
       dispatch(
         loggingInAction({ email: creds.email, password: creds.password })
       );
     })
-    .catch(err => dispatch({ type: REGISTERING_FAILURE, error: err.error }));
+    .catch(err => {
+      dispatch({ type: REGISTERING_FAILURE, error: err });
+    });
 };
 
 export const fetchingSchoolsAction = () => dispatch => {
