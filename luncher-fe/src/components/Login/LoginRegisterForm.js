@@ -10,6 +10,9 @@ export const LoginRegisterForm = ({ isRegistering }) => {
       name: '',
       email: '',
       password: '',
+      schoolName: '',
+      address: '',
+      fundsRequired: 0,
     }
   );
 
@@ -17,7 +20,14 @@ export const LoginRegisterForm = ({ isRegistering }) => {
     setCredentials({ [name]: value });
   };
 
-  const { name, email, password } = credentials;
+  const {
+    name,
+    email,
+    password,
+    schoolName,
+    address,
+    fundsRequired,
+  } = credentials;
 
   const dispatch = useDispatch();
   const handleSubmit = e => {
@@ -34,17 +44,6 @@ export const LoginRegisterForm = ({ isRegistering }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {isRegistering && (
-          <>
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={handleInput}
-            />
-          </>
-        )}
         <label htmlFor="email">Email</label>
         <input type="email" name="email" value={email} onChange={handleInput} />
         <label htmlFor="password">Password</label>
@@ -54,6 +53,38 @@ export const LoginRegisterForm = ({ isRegistering }) => {
           value={password}
           onChange={handleInput}
         />
+        {isRegistering && (
+          <>
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={handleInput}
+            />
+            <label htmlFor="schoolName">School Name</label>
+            <input
+              type="text"
+              name="schoolName"
+              value={schoolName}
+              onChange={handleInput}
+            />
+            <label htmlFor="address">Address</label>
+            <input
+              type="text"
+              name="address"
+              value={address}
+              onChange={handleInput}
+            />
+            <label htmlFor="fundsRequired">Funds Required</label>
+            <input
+              type="number"
+              name="fundsRequired"
+              value={fundsRequired}
+              onChange={handleInput}
+            />
+          </>
+        )}
         <button>{isRegistering ? 'Register' : 'Login'}</button>
       </form>
     </div>
