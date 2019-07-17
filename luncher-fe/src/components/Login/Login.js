@@ -27,7 +27,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const handleSubmit = e => {
     e.preventDefault();
-    // Todo: Login or register
+
     if (isRegistering) {
       dispatch(registeringAction(credentials));
     } else {
