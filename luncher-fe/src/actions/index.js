@@ -26,6 +26,18 @@ export const UPDATING_SCHOOL_FAILURE = 'UPDATING_SCHOOL_FAILURE';
 
 const API_URL = 'http://luncher-lambda-buildweek.herokuapp.com';
 
+export const axiosWithAuth = () => {
+  const token = localStorage.getItem('token');
+
+  return axios.create({
+    headers: {
+      'Content-Type': 'application/json',
+      Authentication: `${token}`,
+    },
+    baseURL: API_URL,
+  });
+};
+
 export const loggingInAction = creds => dispatch => {
   dispatch({ type: LOGGING_IN });
   return axios
@@ -33,26 +45,64 @@ export const loggingInAction = creds => dispatch => {
     .then(resp => {
       localStorage.setItem('token', resp.data.token);
       dispatch({ type: LOGGING_IN_SUCCESS });
+      return resp.data;
     })
     .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
 };
 
-export const registeringAction = creds => dispatch => {
+export const registeringAction = ({
+  email,
+  password,
+  name,
+  schoolName,
+  address,
+  fundsRequired,
+}) => dispatch => {
   dispatch({ type: REGISTERING });
   return axios
-    .post(`${API_URL}/register`, { ...creds, admin: true, donations: 0 })
-    .then(res => {
+    .post(`${API_URL}/register`, {
+      name,
+      email,
+      password,
+      admin: true,
+      donations: 0,
+    })
+    .then(async res => {
       dispatch({ type: REGISTERING_SUCCESS });
       dispatch({ type: LOGGING_IN });
-      axios
+      await axios
         .post(`${API_URL}/login`, {
-          email: creds.email,
-          password: creds.password,
+          email,
+          password,
         })
         .then(resp => {
           localStorage.setItem('token', resp.data.token);
+          console.log(resp);
+          dispatch({ type: ADDING_SCHOOL });
+          axiosWithAuth()
+            .post(`/schools`, {
+              name: schoolName,
+              address: address,
+              funds_required: fundsRequired,
+              funds_donated: 0,
+              admin_id: resp.data.id,
+            })
+            .then(resp =>
+              dispatch({
+                type: ADDING_SCHOOL_SUCCESS,
+                payload: {
+                  name: schoolName,
+                  address: address,
+                  funds_required: fundsRequired,
+                  funds_donated: 0,
+                  admin_id: resp.data.id,
+                },
+              })
+            )
+            .catch(err =>
+              dispatch({ type: ADDING_SCHOOL_FAILURE, error: err.message })
+            );
           dispatch({ type: LOGGING_IN_SUCCESS });
-          dispatch(addingSchoolAction({ ...creds, admin_id: resp.data.id }));
         })
         .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
       // dispatch(

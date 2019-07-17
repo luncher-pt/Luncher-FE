@@ -80,7 +80,11 @@ const reducer = (state = initialState, action) => {
       state = { ...state, addingSchool: true };
       break;
     case ADDING_SCHOOL_SUCCESS:
-      state = { ...state, addingSchool: false, schools: action.payload };
+      state = {
+        ...state,
+        addingSchool: false,
+        schools: [...state.schools, action.payload],
+      };
       break;
     case ADDING_SCHOOL_FAILURE:
       state = { ...state, addingSchool: false, error: action.error };

@@ -35,6 +35,7 @@ export const LoginRegisterForm = ({ isRegistering }) => {
 
     if (isRegistering) {
       dispatch(registeringAction(credentials));
+      console.log(credentials);
     } else {
       dispatch(loggingInAction({ email, password }));
     }
