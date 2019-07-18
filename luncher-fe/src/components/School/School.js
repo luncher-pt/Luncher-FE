@@ -3,7 +3,7 @@ import "./School.css";
 
 function School(props) {
   return (
-      props.school.admin_id ? 
+      props.isLoggedIn ? 
       ( //For the school admin session
         <div className="School">
           <p className="SchoolName">{props.school.name}</p>

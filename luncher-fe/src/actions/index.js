@@ -117,8 +117,8 @@ export const registeringAction = ({
 export const fetchingSchoolsAction = () => dispatch => {
   dispatch({ type: FETCHING_SCHOOLS });
   return axios
-    .get('http://luncher-lambda-buildweek.herokuapp.com/schools', {
-      headers: { Authorization: localStorage.getItem('token') },
+    .get(`${API_URL}/schools`, {
+      headers: { Authentication: localStorage.getItem('token') },
     })
     .then(resp =>
       dispatch({ type: FETCHING_SCHOOLS_SUCCESS, payload: resp.data })
@@ -131,8 +131,8 @@ export const fetchingSchoolsAction = () => dispatch => {
 export const addingSchoolAction = newSchool => dispatch => {
   dispatch({ type: ADDING_SCHOOL });
   return axios
-    .post('http://luncher-lambda-buildweek.herokuapp.com/schools', newSchool, {
-      headers: { Authorization: localStorage.getItem('token') },
+    .post(`${API_URL}/schools`, newSchool, {
+      headers: { Authentication: localStorage.getItem('token') },
     })
     .then(resp => dispatch({ type: ADDING_SCHOOL_SUCCESS, payload: resp.data }))
     .catch(err =>
@@ -143,11 +143,11 @@ export const addingSchoolAction = newSchool => dispatch => {
 export const deletingSchoolAction = id => dispatch => {
   dispatch({ type: DELETING_SCHOOL });
   return axios
-    .delete(`http://luncher-lambda-buildweek.herokuapp.com/schools/${id}`, {
-      headers: { Authorization: localStorage.getItem('token') },
+    .delete(`${API_URL}/schools/${id}`, {
+      headers: { Authentication: localStorage.getItem('token') },
     })
     .then(resp =>
-      dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: resp.data })
+      dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: id })
     )
     .catch(err =>
       dispatch({ type: DELETING_SCHOOL_FAILURE, error: err.message })
@@ -158,12 +158,10 @@ export const updatingSchoolAction = updatedSchool => dispatch => {
   dispatch({ type: UPDATING_SCHOOL });
   return axios
     .put(
-      `http://luncher-lambda-buildweek.herokuapp.com/schools/${
-        updatedSchool.id
-      }`,
+      `${API_URL}/schools/${updatedSchool.id}`,
       updatedSchool,
       {
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authentication: localStorage.getItem('token') },
       }
     )
     .then(resp =>

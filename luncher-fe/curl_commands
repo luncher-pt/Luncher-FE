@@ -4,3 +4,10 @@ curl -vd '{ "name": "Billy2", "email": "Bill2@Billy.com", "password": "TacoMan",
 -- https://github.com/luncher-pt/Luncher-BE/blob/master/Routes/api/loginRoute.js
 
 curl -vd '{ "email": "Bill2@Billy.com", "password": "TacoMan" }' -H "Content-Type: application/json" -X POST http://luncher-lambda-buildweek.herokuapp.com/login/
+
+
+curl -d '{ "username": "user", "password": "password" }' -H "Content-Type: application/json" -X POST http://localhost:5000/api/login
+
+
+curl -H "Authentication: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTU2MzQ1OTUxNiwiZXhwIjoxNTYzNTQ1OTE2fQ.aq6jArd-BJvCqf2SlkA4Bd8jnjjiaR0khdultIlL5kk" -X DELETE http://luncher-lambda-buildweek.herokuapp.com/schools/2
+1

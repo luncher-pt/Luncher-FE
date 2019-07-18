@@ -31,10 +31,11 @@ class Home extends React.Component {
               school={school}
               editHandler={this.editHandler}
               deleteHandler={this.deleteHandler}
+              isLoggedIn={this.props.isLoggedIn}
             />
           ))
         ) : (
-          <h4>Fetching schools ...</h4>
+           <h4 className="Message">Fetching school information ...</h4>
         )}
         {this.props.error && <p className="error"> {this.props.error} </p>}
       </div>
@@ -42,9 +43,10 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = ({ schools, fetchingSchools, error }) => ({
+const mapStateToProps = ({ schools, fetchingSchools, isLoggedIn, error }) => ({
   schools,
   fetchingSchools,
+  isLoggedIn,
   error
 });
 
