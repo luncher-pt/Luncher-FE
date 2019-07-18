@@ -83,7 +83,6 @@ const reducer = (state = initialState, action) => {
       state = {
         ...state,
         addingSchool: false,
-        schools: [...state.schools, action.payload],
       };
       break;
     case ADDING_SCHOOL_FAILURE:
@@ -94,7 +93,11 @@ const reducer = (state = initialState, action) => {
       state = { ...state, deletingSchool: true };
       break;
     case DELETING_SCHOOL_SUCCESS:
-      state = { ...state, deletingSchool: false, schools: state.schools.filter( s => s.id != action.payload) };
+      state = {
+        ...state,
+        deletingSchool: false,
+        schools: state.schools.filter(s => s.id != action.payload),
+      };
       break;
     case DELETING_SCHOOL_FAILURE:
       state = { ...state, deletingSchool: false, error: action.error };
