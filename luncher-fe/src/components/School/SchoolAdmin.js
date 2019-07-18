@@ -1,60 +1,86 @@
-import React from 'react';
+import React, { useState, useReducer } from 'react';
 import './School.css';
 
-const SchoolAdmin = props => {
-  return props.isLoggedIn ? (
+const SchoolAdmin = ({
+  school: { name, address, funds_required, funds_donated, admin_id },
+  isLoggedIn,
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [schoolInput, setSchoolInput] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      name: '',
+      address: '',
+      funds_required: '',
+      funds_donated: '',
+    }
+  );
+
+  return !isEditing ? (
     //For the school admin session
     <div className="School">
-      <p className="SchoolName">{props.school.name}</p>
+      <p className="SchoolName">{name}</p>
       <ul>
         <li>
           <strong>Address: </strong>
-          {props.school.address}
+          {address}
         </li>
         <li>
           <strong>Funds Required: </strong>
-          {props.school.funds_required}
+          {funds_required}
         </li>
         <li>
           <strong>Funds Donated: </strong>
-          {props.school.funds_donated}
+          {funds_donated}
         </li>
         <li>
           <strong>Admin user: </strong>
-          {props.school.admin_id}
+          {admin_id}
         </li>
       </ul>
       <div className="SchoolActions">
         <p
           title="Update"
           className="UpdateButton"
-          onClick={() => props.editHandler(props.school)}
+          onClick={() => setIsEditing(true)}
         >
           Update
         </p>
-        <p
-          title="Delete"
-          className="DeleteButton"
-          onClick={() => props.deleteHandler(props.school.id)}
-        >
+        <p title="Delete" className="DeleteButton" onClick={() => {}}>
           Delete
         </p>
       </div>
     </div>
   ) : (
-    //For the donor session
     <div className="School">
-      <p className="SchoolName">{props.school.name}</p>
+      <p className="SchoolName">{name}</p>
       <ul>
         <li>
           <strong>Address: </strong>
-          {props.school.address}
+          {address}
         </li>
         <li>
           <strong>Funds Required: </strong>
-          {props.school.funds_required}
+          {funds_required}
+        </li>
+        <li>
+          <strong>Funds Donated: </strong>
+          {funds_donated}
+        </li>
+        <li>
+          <strong>Admin user: </strong>
+          {admin_id}
         </li>
       </ul>
+      <div className="SchoolActions">
+        <p title="Update" className="UpdateButton" onClick={() => {}}>
+          Update
+        </p>
+        <p title="Delete" className="DeleteButton" onClick={() => {}}>
+          Delete
+        </p>
+      </div>
     </div>
   );
 };

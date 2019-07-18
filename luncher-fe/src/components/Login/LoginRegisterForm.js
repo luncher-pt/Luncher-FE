@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { registeringAction, loggingInAction } from '../../actions';
 
-export const LoginRegisterForm = ({ isRegistering }) => {
+const LoginRegisterForm = ({ isRegistering }) => {
   const [credentials, setCredentials] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
