@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 export const LOGGING_IN = 'LOGGING_IN';
 export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
@@ -40,7 +41,10 @@ export const axiosWithAuth = () => {
 
 export const checkLogin = () => dispatch => {
   if (localStorage.token) {
-    dispatch({ type: LOGGING_IN_SUCCESS });
+    dispatch({
+      type: LOGGING_IN_SUCCESS,
+      payload: jwt_decode(localStorage.token),
+    });
   }
 };
 

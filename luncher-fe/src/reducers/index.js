@@ -28,6 +28,7 @@ import {
 const initialState = {
   loggingIn: false,
   isLoggedIn: false,
+  userId: null,
   registering: false,
   fetchingSchools: false,
   schools: [],
@@ -43,7 +44,12 @@ const reducer = (state = initialState, action) => {
       state = { ...state, loggingIn: true };
       break;
     case LOGGING_IN_SUCCESS:
-      state = { ...state, loggingIn: false, isLoggedIn: true };
+      state = {
+        ...state,
+        loggingIn: false,
+        isLoggedIn: true,
+        userId: action.payload.id,
+      };
       break;
     case LOGGING_IN_FAILURE:
       state = { ...state, loggingIn: false, error: action.error };
