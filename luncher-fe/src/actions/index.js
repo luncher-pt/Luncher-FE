@@ -54,7 +54,7 @@ export const loggingInAction = creds => dispatch => {
     .post(`${API_URL}/login`, creds)
     .then(resp => {
       localStorage.setItem('token', resp.data.token);
-      dispatch({ type: LOGGING_IN_SUCCESS });
+      dispatch({ type: LOGGING_IN_SUCCESS, payload: resp.data.id });
       return resp.data;
     })
     .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
