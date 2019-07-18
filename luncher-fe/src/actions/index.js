@@ -38,6 +38,12 @@ export const axiosWithAuth = () => {
   });
 };
 
+export const checkLogin = () => dispatch => {
+  if (localStorage.token) {
+    dispatch({ type: LOGGING_IN_SUCCESS });
+  }
+};
+
 export const loggingInAction = creds => dispatch => {
   dispatch({ type: LOGGING_IN });
   return axios
