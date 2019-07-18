@@ -87,18 +87,7 @@ export const registeringAction = ({
               funds_donated: 0,
               admin_id: resp.data.id,
             })
-            .then(resp =>
-              dispatch({
-                type: ADDING_SCHOOL_SUCCESS,
-                payload: {
-                  name: schoolName,
-                  address: address,
-                  funds_required: fundsRequired,
-                  funds_donated: 0,
-                  admin_id: resp.data.id,
-                },
-              })
-            )
+            .then(resp => dispatch({ type: ADDING_SCHOOL_SUCCESS }))
             .catch(err =>
               dispatch({ type: ADDING_SCHOOL_FAILURE, error: err.message })
             );
