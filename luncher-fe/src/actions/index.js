@@ -75,11 +75,11 @@ export const registeringAction = ({
           email,
           password,
         })
-        .then(resp => {
+        .then(async resp => {
           localStorage.setItem('token', resp.data.token);
           console.log(resp);
           dispatch({ type: ADDING_SCHOOL });
-          axiosWithAuth()
+          await axiosWithAuth()
             .post(`/schools`, {
               name: schoolName,
               address: address,
@@ -91,12 +91,10 @@ export const registeringAction = ({
             .catch(err =>
               dispatch({ type: ADDING_SCHOOL_FAILURE, error: err.message })
             );
-          dispatch({ type: LOGGING_IN_SUCCESS });
         })
         .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
-      // dispatch(
-      //   loggingInAction({ email: creds.email, password: creds.password })
-      // );
+
+      dispatch({ type: LOGGING_IN_SUCCESS });
     })
     .catch(err => {
       dispatch({ type: REGISTERING_FAILURE, error: err });
@@ -135,9 +133,7 @@ export const deletingSchoolAction = id => dispatch => {
     .delete(`${API_URL}/schools/${id}`, {
       headers: { Authentication: localStorage.getItem('token') },
     })
-    .then(resp =>
-      dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: id })
-    )
+    .then(resp => dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: id }))
     .catch(err =>
       dispatch({ type: DELETING_SCHOOL_FAILURE, error: err.message })
     );
@@ -146,13 +142,9 @@ export const deletingSchoolAction = id => dispatch => {
 export const updatingSchoolAction = updatedSchool => dispatch => {
   dispatch({ type: UPDATING_SCHOOL });
   return axios
-    .put(
-      `${API_URL}/schools/${updatedSchool.id}`,
-      updatedSchool,
-      {
-        headers: { Authentication: localStorage.getItem('token') },
-      }
-    )
+    .put(`${API_URL}/schools/${updatedSchool.id}`, updatedSchool, {
+      headers: { Authentication: localStorage.getItem('token') },
+    })
     .then(resp =>
       dispatch({ type: UPDATING_SCHOOL_SUCCESS, payload: resp.data })
     )
