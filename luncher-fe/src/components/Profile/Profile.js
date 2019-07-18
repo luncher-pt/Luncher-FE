@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchingSchoolsAction } from '../../actions';
-import School from '../School/School';
+import SchoolAdmin from '../School/SchoolAdmin';
 
 const Admin = () => {
   const { userId, schools, isLoggedIn, fetchingSchools, error } = useSelector(
@@ -14,18 +15,19 @@ const Admin = () => {
     if (schools.length === 0) {
       dispatch(fetchingSchoolsAction());
     }
-  }, [schools]);
+  }, [schools, dispatch]);
 
   const mySchools = schools.filter(school => school.admin_id === userId);
 
   return (
     <div>
+      {!localStorage.token && <Redirect to="/login" />}
       <div>Admin</div>
       <div>My Schools</div>
       <div>
         {!fetchingSchools ? (
           mySchools.map(school => (
-            <School
+            <SchoolAdmin
               key={school.id}
               school={school}
               // editHandler={this.editHandler}
