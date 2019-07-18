@@ -1,8 +1,10 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import './NavBar.css';
 
 const NavBar = () => {
+  const isLoggedIn = useSelector(state => state.isLoggedIn);
   return (
     <div className="NavBar">
       <NavLink
@@ -13,15 +15,26 @@ const NavBar = () => {
       >
         Home
       </NavLink>
-      <NavLink
-        exact={true}
-        to="/login"
-        className="inactive"
-        activeClassName="active"
-      >
-        Login
-      </NavLink>
-    </div>      
+      {!isLoggedIn ? (
+        <NavLink
+          exact={true}
+          to="/login"
+          className="inactive"
+          activeClassName="active"
+        >
+          Login
+        </NavLink>
+      ) : (
+        <NavLink
+          exact={true}
+          to="/profile"
+          className="inactive"
+          activeClassName="active"
+        >
+          Profile
+        </NavLink>
+      )}
+    </div>
   );
 };
 
