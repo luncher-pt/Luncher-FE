@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 export const LOGGING_IN = 'LOGGING_IN';
 export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
@@ -38,13 +39,22 @@ export const axiosWithAuth = () => {
   });
 };
 
+export const checkLogin = () => dispatch => {
+  if (localStorage.token) {
+    dispatch({
+      type: LOGGING_IN_SUCCESS,
+      payload: jwt_decode(localStorage.token),
+    });
+  }
+};
+
 export const loggingInAction = creds => dispatch => {
   dispatch({ type: LOGGING_IN });
   return axios
     .post(`${API_URL}/login`, creds)
     .then(resp => {
       localStorage.setItem('token', resp.data.token);
-      dispatch({ type: LOGGING_IN_SUCCESS });
+      dispatch({ type: LOGGING_IN_SUCCESS, payload: resp.data });
       return resp.data;
     })
     .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
@@ -139,15 +149,27 @@ export const deletingSchoolAction = id => dispatch => {
     );
 };
 
-export const updatingSchoolAction = updatedSchool => dispatch => {
+export const updatingSchoolAction = ({
+  name,
+  address,
+  funds_required,
+  funds_donated,
+  admin_id,
+  id,
+}) => dispatch => {
   dispatch({ type: UPDATING_SCHOOL });
-  return axios
-    .put(`${API_URL}/schools/${updatedSchool.id}`, updatedSchool, {
-      headers: { Authentication: localStorage.getItem('token') },
+  return axiosWithAuth()
+    .put(`${API_URL}/schools/${id}`, {
+      name,
+      address,
+      funds_required,
+      funds_donated,
+      admin_id,
     })
-    .then(resp =>
-      dispatch({ type: UPDATING_SCHOOL_SUCCESS, payload: resp.data })
-    )
+    .then(resp => {
+      console.log(resp);
+      dispatch({ type: UPDATING_SCHOOL_SUCCESS, payload: resp.data[0] });
+    })
     .catch(err =>
       dispatch({ type: UPDATING_SCHOOL_FAILURE, error: err.message })
     );
