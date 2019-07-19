@@ -143,7 +143,7 @@ export const deletingSchoolAction = id => dispatch => {
     .delete(`${API_URL}/schools/${id}`, {
       headers: { Authentication: localStorage.getItem('token') },
     })
-    .then(resp => dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: id }))
+    .then(resp => dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: resp.data }))
     .catch(err =>
       dispatch({ type: DELETING_SCHOOL_FAILURE, error: err.message })
     );
