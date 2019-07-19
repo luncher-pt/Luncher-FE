@@ -32,6 +32,7 @@ class Home extends React.Component {
               editHandler={this.editHandler}
               deleteHandler={this.deleteHandler}
               isLoggedIn={this.props.isLoggedIn}
+              userId={this.props.userId}
             />
           ))
         ) : (
@@ -43,10 +44,11 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = ({ schools, fetchingSchools, isLoggedIn, error }) => ({
+const mapStateToProps = ({ schools, fetchingSchools, isLoggedIn, userId, error }) => ({
   schools,
   fetchingSchools,
   isLoggedIn,
+  userId,
   error
 });
 
