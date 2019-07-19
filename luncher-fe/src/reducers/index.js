@@ -113,7 +113,14 @@ const reducer = (state = initialState, action) => {
       state = { ...state, updatingSchool: true };
       break;
     case UPDATING_SCHOOL_SUCCESS:
-      state = { ...state, updatingSchool: false, schools: action.payload };
+      state = {
+        ...state,
+        updatingSchool: false,
+        schools: [
+          ...state.schools.filter(school => school.id !== action.payload.id),
+          action.payload,
+        ],
+      };
       break;
     case UPDATING_SCHOOL_FAILURE:
       state = { ...state, updatingSchool: false, error: action.error };
