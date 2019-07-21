@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchingSchoolsAction } from '../../actions';
-import SchoolAdmin from '../School/SchoolAdmin';
+import School from '../School/School';
 
 const Admin = () => {
   const { userId, schools, isLoggedIn, fetchingSchools, error } = useSelector(
@@ -27,12 +27,11 @@ const Admin = () => {
       <div>
         {!fetchingSchools ? (
           mySchools.map(school => (
-            <SchoolAdmin
+            <School
               key={school.id}
               school={school}
-              // editHandler={this.editHandler}
-              // deleteHandler={this.deleteHandler}
               isLoggedIn={isLoggedIn}
+              userId={userId}
             />
           ))
         ) : (
