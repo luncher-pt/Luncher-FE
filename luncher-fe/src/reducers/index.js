@@ -29,6 +29,8 @@ const initialState = {
   loggingIn: false,
   isLoggedIn: false,
   userId: null,
+  name: '',
+  email: '',
   registering: false,
   fetchingSchools: false,
   schools: [],
@@ -49,6 +51,8 @@ const reducer = (state = initialState, action) => {
         loggingIn: false,
         isLoggedIn: true,
         userId: action.payload.id,
+        email: action.payload.email,
+        name: action.payload.name,
       };
       break;
     case LOGGING_IN_FAILURE:
@@ -102,7 +106,7 @@ const reducer = (state = initialState, action) => {
       state = {
         ...state,
         deletingSchool: false,
-        schools: state.schools.filter(s => s.id != action.payload),
+        schools: state.schools.filter(s => s.id !== action.payload),
       };
       break;
     case DELETING_SCHOOL_FAILURE:

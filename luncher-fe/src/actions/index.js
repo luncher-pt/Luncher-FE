@@ -39,11 +39,17 @@ export const axiosWithAuth = () => {
   });
 };
 
-export const checkLogin = () => dispatch => {
+export const checkLogin = () => async dispatch => {
   if (localStorage.token) {
+    const user = await axiosWithAuth()
+      .get(`${API_URL}/users/${jwt_decode(localStorage.token).id}`)
+      .then(res => {
+        return res;
+      })
+      .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
     dispatch({
       type: LOGGING_IN_SUCCESS,
-      payload: jwt_decode(localStorage.token),
+      payload: user.data,
     });
   }
 };
@@ -54,7 +60,7 @@ export const loggingInAction = creds => dispatch => {
     .post(`${API_URL}/login`, creds)
     .then(resp => {
       localStorage.setItem('token', resp.data.token);
-      dispatch({ type: LOGGING_IN_SUCCESS, payload: resp.data });
+      dispatch(checkLogin());
       return resp.data;
     })
     .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
@@ -143,7 +149,9 @@ export const deletingSchoolAction = id => dispatch => {
     .delete(`${API_URL}/schools/${id}`, {
       headers: { Authentication: localStorage.getItem('token') },
     })
-    .then(resp => dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: resp.data }))
+    .then(resp =>
+      dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: parseInt(resp.data) })
+    )
     .catch(err =>
       dispatch({ type: DELETING_SCHOOL_FAILURE, error: err.message })
     );

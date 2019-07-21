@@ -2,7 +2,7 @@ import React, { useState, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
 import './School.css';
 
-import { updatingSchoolAction } from '../../actions';
+import { updatingSchoolAction, deletingSchoolAction } from '../../actions';
 
 function School({
   school: { name, address, funds_required, funds_donated, admin_id, id },
@@ -37,6 +37,11 @@ function School({
     ) {
       dispatch(updatingSchoolAction(schoolInput));
     }
+    setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    dispatch(deletingSchoolAction(id));
     setIsEditing(false);
   };
   return isLoggedIn ? (
@@ -114,7 +119,7 @@ function School({
             {!isEditing ? 'Edit' : 'Save'}
           </p>
           {isEditing && (
-            <p title="Delete" className="DeleteButton" onClick={() => {}}>
+            <p title="Delete" className="DeleteButton" onClick={handleDelete}>
               Delete
             </p>
           )}
