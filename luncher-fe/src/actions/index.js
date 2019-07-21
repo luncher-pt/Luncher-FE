@@ -5,6 +5,8 @@ export const LOGGING_IN = 'LOGGING_IN';
 export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
 export const LOGGING_IN_FAILURE = 'LOGGING_IN_FAILURE';
 
+export const LOGGING_OUT = 'LOGGING_OUT';
+
 export const REGISTERING = 'REGISTERING';
 export const REGISTERING_SUCCESS = 'REGISTERING_SUCCESS';
 export const REGISTERING_FAILURE = 'REGISTERING_FAILURE';
@@ -68,6 +70,11 @@ export const loggingInAction = creds => dispatch => {
       return resp.data;
     })
     .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
+};
+
+export const loggingOutAction = () => dispatch => {
+  localStorage.removeItem('token');
+  dispatch({ type: LOGGING_OUT });
 };
 
 export const registeringAction = ({

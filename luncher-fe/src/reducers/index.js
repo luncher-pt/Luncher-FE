@@ -1,4 +1,7 @@
 import { LOGGING_IN, LOGGING_IN_SUCCESS, LOGGING_IN_FAILURE } from '../actions';
+
+import { LOGGING_OUT } from '../actions';
+
 import {
   FETCHING_SCHOOLS,
   FETCHING_SCHOOLS_SUCCESS,
@@ -64,6 +67,15 @@ const reducer = (state = initialState, action) => {
     case LOGGING_IN_FAILURE:
       state = { ...state, loggingIn: false, error: action.error };
       break;
+
+    case LOGGING_OUT:
+      return {
+        ...state,
+        isLoggedIn: false,
+        userId: '',
+        email: '',
+        name: '',
+      };
 
     case REGISTERING:
       return {
