@@ -4,18 +4,23 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchingSchoolsAction } from '../../actions';
 import School from '../School/School';
+import ProfileEdit from './ProfileEdit';
 
 const Admin = () => {
-  const { userId, schools, isLoggedIn, fetchingSchools, error } = useSelector(
-    state => state
-  );
+  const {
+    userId,
+    name,
+    email,
+    schools,
+    isLoggedIn,
+    fetchingSchools,
+    error,
+  } = useSelector(state => state);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (schools.length === 0) {
-      dispatch(fetchingSchoolsAction());
-    }
-  }, [schools, dispatch]);
+    dispatch(fetchingSchoolsAction());
+  }, [dispatch]);
 
   const mySchools = schools.filter(school => school.admin_id === userId);
 
@@ -40,6 +45,7 @@ const Admin = () => {
         {error && <p className="error"> {error} </p>}
       </div>
       <div>Profile Information</div>
+      <ProfileEdit />
     </div>
   );
 };

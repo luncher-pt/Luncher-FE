@@ -24,6 +24,11 @@ import {
   REGISTERING_SUCCESS,
   REGISTERING_FAILURE,
 } from '../actions';
+import {
+  UPDATING_USER,
+  UPDATING_USER_SUCCESS,
+  UPDATING_USER_FAILURE,
+} from '../actions';
 
 const initialState = {
   loggingIn: false,
@@ -32,6 +37,7 @@ const initialState = {
   name: '',
   email: '',
   registering: false,
+  updatingUser: false,
   fetchingSchools: false,
   schools: [],
   addingSchool: false,
@@ -73,6 +79,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         registering: false,
+        error: action.error,
+      };
+
+    case UPDATING_USER:
+      return {
+        ...state,
+        updatingUser: true,
+      };
+    case UPDATING_USER_SUCCESS:
+      return {
+        ...state,
+        updatingUser: false,
+        userId: action.payload.id,
+        email: action.payload.email,
+        name: action.payload.name,
+      };
+    case UPDATING_USER_FAILURE:
+      return {
+        ...state,
+        updatingUser: false,
         error: action.error,
       };
 

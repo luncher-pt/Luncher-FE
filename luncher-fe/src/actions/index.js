@@ -25,6 +25,10 @@ export const UPDATING_SCHOOL = 'UPDATING_SCHOOL';
 export const UPDATING_SCHOOL_SUCCESS = 'UPDATING_SCHOOL_SUCCESS';
 export const UPDATING_SCHOOL_FAILURE = 'UPDATING_SCHOOL_FAILURE';
 
+export const UPDATING_USER = 'UPDATING_USER';
+export const UPDATING_USER_SUCCESS = 'UPDATING_USER_SUCCESS';
+export const UPDATING_USER_FAILURE = 'UPDATING_USER_FAILURE';
+
 const API_URL = 'http://luncher-lambda-buildweek.herokuapp.com';
 
 export const axiosWithAuth = () => {
@@ -93,7 +97,6 @@ export const registeringAction = ({
         })
         .then(async resp => {
           localStorage.setItem('token', resp.data.token);
-          console.log(resp);
           dispatch({ type: ADDING_SCHOOL });
           await axiosWithAuth()
             .post(`/schools`, {
@@ -113,7 +116,19 @@ export const registeringAction = ({
       dispatch({ type: LOGGING_IN_SUCCESS });
     })
     .catch(err => {
-      dispatch({ type: REGISTERING_FAILURE, error: err });
+      dispatch({ type: REGISTERING_FAILURE, error: err.error });
+    });
+};
+
+export const updatingUserAction = ({ id, ...user }) => dispatch => {
+  dispatch({ type: UPDATING_USER });
+  axiosWithAuth()
+    .put(`${API_URL}/users/${id}`, user)
+    .then(res => {
+      dispatch({ type: UPDATING_USER_SUCCESS, payload: res.data[0] });
+    })
+    .catch(err => {
+      dispatch({ type: UPDATING_USER_FAILURE, payload: err.message });
     });
 };
 
@@ -175,7 +190,6 @@ export const updatingSchoolAction = ({
       admin_id,
     })
     .then(resp => {
-      console.log(resp);
       dispatch({ type: UPDATING_SCHOOL_SUCCESS, payload: resp.data[0] });
     })
     .catch(err =>
