@@ -5,6 +5,8 @@ export const LOGGING_IN = 'LOGGING_IN';
 export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
 export const LOGGING_IN_FAILURE = 'LOGGING_IN_FAILURE';
 
+export const LOGGING_OUT = 'LOGGING_OUT';
+
 export const REGISTERING = 'REGISTERING';
 export const REGISTERING_SUCCESS = 'REGISTERING_SUCCESS';
 export const REGISTERING_FAILURE = 'REGISTERING_FAILURE';
@@ -25,6 +27,10 @@ export const UPDATING_SCHOOL = 'UPDATING_SCHOOL';
 export const UPDATING_SCHOOL_SUCCESS = 'UPDATING_SCHOOL_SUCCESS';
 export const UPDATING_SCHOOL_FAILURE = 'UPDATING_SCHOOL_FAILURE';
 
+export const UPDATING_USER = 'UPDATING_USER';
+export const UPDATING_USER_SUCCESS = 'UPDATING_USER_SUCCESS';
+export const UPDATING_USER_FAILURE = 'UPDATING_USER_FAILURE';
+
 const API_URL = 'http://luncher-lambda-buildweek.herokuapp.com';
 
 export const axiosWithAuth = () => {
@@ -39,11 +45,17 @@ export const axiosWithAuth = () => {
   });
 };
 
-export const checkLogin = () => dispatch => {
+export const checkLogin = () => async dispatch => {
   if (localStorage.token) {
+    const user = await axiosWithAuth()
+      .get(`${API_URL}/users/${jwt_decode(localStorage.token).id}`)
+      .then(res => {
+        return res;
+      })
+      .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
     dispatch({
       type: LOGGING_IN_SUCCESS,
-      payload: jwt_decode(localStorage.token),
+      payload: user.data,
     });
   }
 };
@@ -54,10 +66,15 @@ export const loggingInAction = creds => dispatch => {
     .post(`${API_URL}/login`, creds)
     .then(resp => {
       localStorage.setItem('token', resp.data.token);
-      dispatch({ type: LOGGING_IN_SUCCESS, payload: resp.data });
+      dispatch(checkLogin());
       return resp.data;
     })
     .catch(err => dispatch({ type: LOGGING_IN_FAILURE, error: err.error }));
+};
+
+export const loggingOutAction = () => dispatch => {
+  localStorage.removeItem('token');
+  dispatch({ type: LOGGING_OUT });
 };
 
 export const registeringAction = ({
@@ -87,7 +104,6 @@ export const registeringAction = ({
         })
         .then(async resp => {
           localStorage.setItem('token', resp.data.token);
-          console.log(resp);
           dispatch({ type: ADDING_SCHOOL });
           await axiosWithAuth()
             .post(`/schools`, {
@@ -107,7 +123,19 @@ export const registeringAction = ({
       dispatch({ type: LOGGING_IN_SUCCESS });
     })
     .catch(err => {
-      dispatch({ type: REGISTERING_FAILURE, error: err });
+      dispatch({ type: REGISTERING_FAILURE, error: err.error });
+    });
+};
+
+export const updatingUserAction = ({ id, ...user }) => dispatch => {
+  dispatch({ type: UPDATING_USER });
+  axiosWithAuth()
+    .put(`${API_URL}/users/${id}`, user)
+    .then(res => {
+      dispatch({ type: UPDATING_USER_SUCCESS, payload: res.data[0] });
+    })
+    .catch(err => {
+      dispatch({ type: UPDATING_USER_FAILURE, payload: err.message });
     });
 };
 
@@ -143,7 +171,9 @@ export const deletingSchoolAction = id => dispatch => {
     .delete(`${API_URL}/schools/${id}`, {
       headers: { Authentication: localStorage.getItem('token') },
     })
-    .then(resp => dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: resp.data }))
+    .then(resp =>
+      dispatch({ type: DELETING_SCHOOL_SUCCESS, payload: parseInt(resp.data) })
+    )
     .catch(err =>
       dispatch({ type: DELETING_SCHOOL_FAILURE, error: err.message })
     );
@@ -167,7 +197,6 @@ export const updatingSchoolAction = ({
       admin_id,
     })
     .then(resp => {
-      console.log(resp);
       dispatch({ type: UPDATING_SCHOOL_SUCCESS, payload: resp.data[0] });
     })
     .catch(err =>

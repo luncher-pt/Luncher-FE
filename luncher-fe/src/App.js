@@ -9,6 +9,7 @@ import NavBar from './components/NavBar/NavBar';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
 import Login from './components/Login/Login';
+import Logout from './components/Logout/Logout';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/profile" component={Profile} />
           <Route path="/login" component={Login} />
-          {/* single school route ( /updateSchool ) to be implemented */}
+          <Route path="/logout" component={Logout} />
         </div>
       </Router>
     </main>

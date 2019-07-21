@@ -1,4 +1,7 @@
 import { LOGGING_IN, LOGGING_IN_SUCCESS, LOGGING_IN_FAILURE } from '../actions';
+
+import { LOGGING_OUT } from '../actions';
+
 import {
   FETCHING_SCHOOLS,
   FETCHING_SCHOOLS_SUCCESS,
@@ -24,12 +27,20 @@ import {
   REGISTERING_SUCCESS,
   REGISTERING_FAILURE,
 } from '../actions';
+import {
+  UPDATING_USER,
+  UPDATING_USER_SUCCESS,
+  UPDATING_USER_FAILURE,
+} from '../actions';
 
 const initialState = {
   loggingIn: false,
   isLoggedIn: false,
   userId: null,
+  name: '',
+  email: '',
   registering: false,
+  updatingUser: false,
   fetchingSchools: false,
   schools: [],
   addingSchool: false,
@@ -49,11 +60,22 @@ const reducer = (state = initialState, action) => {
         loggingIn: false,
         isLoggedIn: true,
         userId: action.payload.id,
+        email: action.payload.email,
+        name: action.payload.name,
       };
       break;
     case LOGGING_IN_FAILURE:
       state = { ...state, loggingIn: false, error: action.error };
       break;
+
+    case LOGGING_OUT:
+      return {
+        ...state,
+        isLoggedIn: false,
+        userId: '',
+        email: '',
+        name: '',
+      };
 
     case REGISTERING:
       return {
@@ -69,6 +91,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         registering: false,
+        error: action.error,
+      };
+
+    case UPDATING_USER:
+      return {
+        ...state,
+        updatingUser: true,
+      };
+    case UPDATING_USER_SUCCESS:
+      return {
+        ...state,
+        updatingUser: false,
+        userId: action.payload.id,
+        email: action.payload.email,
+        name: action.payload.name,
+      };
+    case UPDATING_USER_FAILURE:
+      return {
+        ...state,
+        updatingUser: false,
         error: action.error,
       };
 
@@ -102,7 +144,7 @@ const reducer = (state = initialState, action) => {
       state = {
         ...state,
         deletingSchool: false,
-        schools: state.schools.filter(s => s.id != action.payload),
+        schools: state.schools.filter(s => s.id !== action.payload),
       };
       break;
     case DELETING_SCHOOL_FAILURE:

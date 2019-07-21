@@ -29,14 +29,12 @@ class Home extends React.Component {
             <School
               key={school.id}
               school={school}
-              editHandler={this.editHandler}
-              deleteHandler={this.deleteHandler}
               isLoggedIn={this.props.isLoggedIn}
               userId={this.props.userId}
             />
           ))
         ) : (
-           <h4 className="Message">Fetching school information ...</h4>
+          <h4 className="Message">Fetching school information ...</h4>
         )}
         {this.props.error && <p className="error"> {this.props.error} </p>}
       </div>
@@ -44,12 +42,18 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = ({ schools, fetchingSchools, isLoggedIn, userId, error }) => ({
+const mapStateToProps = ({
   schools,
   fetchingSchools,
   isLoggedIn,
   userId,
-  error
+  error,
+}) => ({
+  schools,
+  fetchingSchools,
+  isLoggedIn,
+  userId,
+  error,
 });
 
 export default withRouter(

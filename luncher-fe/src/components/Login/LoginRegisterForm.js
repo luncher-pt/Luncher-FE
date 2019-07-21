@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { registeringAction, loggingInAction } from '../../actions';
@@ -35,7 +35,6 @@ const LoginRegisterForm = ({ isRegistering }) => {
 
     if (isRegistering) {
       dispatch(registeringAction(credentials));
-      console.log(credentials);
     } else {
       dispatch(loggingInAction({ email, password }));
     }

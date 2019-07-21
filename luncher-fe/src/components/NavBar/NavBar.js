@@ -25,14 +25,24 @@ const NavBar = () => {
           Login
         </NavLink>
       ) : (
-        <NavLink
-          exact={true}
-          to="/profile"
-          className="inactive"
-          activeClassName="active"
-        >
-          Profile
-        </NavLink>
+        <>
+          <NavLink
+            exact={true}
+            to="/profile"
+            className="inactive"
+            activeClassName="active"
+          >
+            Profile
+          </NavLink>
+          <NavLink
+            exact={true}
+            to="/logout"
+            className="inactive"
+            activeClassName="active"
+          >
+            Logout
+          </NavLink>
+        </>
       )}
     </div>
   );
