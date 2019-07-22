@@ -60,8 +60,7 @@ function School({
   bg-blue-100 shadow mb-1 rounded-sm p-1
   `;
 
-  return isLoggedIn ? (
-    //For the school admin session
+  return (
     <div className="bg-blue-300 mx-1 mb-1 rounded-sm p-1 w-full text-blue-900">
       <div className="">
         {!isEditing ? (
@@ -147,21 +146,6 @@ function School({
           )}
         </div>
       )}
-    </div>
-  ) : (
-    //For the donor session
-    <div className="School">
-      <p className="SchoolName">{name}</p>
-      <ul>
-        <li>
-          <strong>Address: </strong>
-          {address}
-        </li>
-        <li>
-          <strong>Funds Required: </strong>
-          {funds_required}
-        </li>
-      </ul>
     </div>
   );
 }
