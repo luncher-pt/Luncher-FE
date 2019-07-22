@@ -22,7 +22,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap w-full">
         {!this.props.fetchingSchools ? (
           this.props.schools.map(school => (
             <School

@@ -44,8 +44,8 @@ const ProfileEdit = () => {
   `;
 
   return (
-    <div className="flex">
-      <div className="bg-blue-300 mx-1 mb-1 rounded-sm p-1 w-full text-blue-900">
+    <div className="flex justify-center">
+      <div className="bg-blue-300 mx-1 mb-1 rounded-sm p-1 w-full md:w-4/6 text-blue-900">
         <form onSubmit={handleSave}>
           <div className={inputContainer}>
             <label className="mr-2" htmlFor="name">

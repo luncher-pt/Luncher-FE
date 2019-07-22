@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchingSchoolsAction } from '../../actions';
 import School from '../School/School';
 import ProfileEdit from './ProfileEdit';
+import AddSchool from './AddSchool';
 
 const Admin = () => {
   const { userId, schools, isLoggedIn, fetchingSchools, error } = useSelector(
@@ -29,7 +30,7 @@ const Admin = () => {
   `;
 
   return (
-    <div>
+    <div className="">
       <div className="flex items-center bg-blue-300 mb-1 mx-1 rounded-sm p-2">
         <button
           className={tab === 'schools' ? tabStyleActive : tabStyleDefault}
@@ -43,10 +44,20 @@ const Admin = () => {
         >
           Edit Profile
         </button>
+        {(tab === 'schools' || tab === 'addSchool') && (
+          <button
+            onClick={() => setTab('addSchool')}
+            className={`${
+              tab === 'addSchool' ? tabStyleActive : tabStyleDefault
+            } ml-auto`}
+          >
+            Add School
+          </button>
+        )}
       </div>
       {!localStorage.token && <Redirect to="/login" />}
       {tab === 'schools' && (
-        <div className="flex">
+        <div className="flex flex-wrap w-full">
           {!fetchingSchools ? (
             mySchools.map(school => (
               <School
@@ -63,6 +74,7 @@ const Admin = () => {
         </div>
       )}
       {tab === 'profile' && <ProfileEdit />}
+      {tab === 'addSchool' && <AddSchool setTab={setTab} />}
     </div>
   );
 };
