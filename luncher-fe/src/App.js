@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { checkLogin } from './actions';
 
-import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';

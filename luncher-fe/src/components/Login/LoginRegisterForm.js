@@ -41,15 +41,26 @@ const LoginRegisterForm = ({ isRegistering }) => {
     setCredentials({ name: '', email: '', password: '' });
   };
 
+  const inputStyle = `
+    bg-blue-200 p-1
+  `;
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="">
+      <form className="flex flex-col" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
-        <input type="email" name="email" value={email} onChange={handleInput} />
+        <input
+          type="email"
+          name="email"
+          className={inputStyle}
+          value={email}
+          onChange={handleInput}
+        />
         <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
+          className={inputStyle}
           value={password}
           onChange={handleInput}
         />
@@ -59,6 +70,7 @@ const LoginRegisterForm = ({ isRegistering }) => {
             <input
               type="text"
               name="name"
+              className={inputStyle}
               value={name}
               onChange={handleInput}
             />
@@ -66,6 +78,7 @@ const LoginRegisterForm = ({ isRegistering }) => {
             <input
               type="text"
               name="schoolName"
+              className={inputStyle}
               value={schoolName}
               onChange={handleInput}
             />
@@ -73,6 +86,7 @@ const LoginRegisterForm = ({ isRegistering }) => {
             <input
               type="text"
               name="address"
+              className={inputStyle}
               value={address}
               onChange={handleInput}
             />
@@ -80,12 +94,13 @@ const LoginRegisterForm = ({ isRegistering }) => {
             <input
               type="number"
               name="fundsRequired"
+              className={inputStyle}
               value={fundsRequired}
               onChange={handleInput}
             />
           </>
         )}
-        <button>{isRegistering ? 'Register' : 'Login'}</button>
+        <button className="flex-grow items-center justify-center cursor-pointer h-10 bg-blue-800 mt-1 text-blue-200 rounded-sm" >{isRegistering ? 'Register' : 'Login'}</button>
       </form>
     </div>
   );
