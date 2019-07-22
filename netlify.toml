@@ -1,0 +1,4 @@
+[build]
+base = "luncher-fe/"
+publish = "luncher-fe/build"
+command = "yarn build"
