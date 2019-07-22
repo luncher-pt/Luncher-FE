@@ -31,7 +31,7 @@ export const UPDATING_USER = 'UPDATING_USER';
 export const UPDATING_USER_SUCCESS = 'UPDATING_USER_SUCCESS';
 export const UPDATING_USER_FAILURE = 'UPDATING_USER_FAILURE';
 
-const API_URL = 'http://luncher-lambda-buildweek.herokuapp.com';
+const API_URL = 'https://luncher-lambda-buildweek.herokuapp.com';
 
 export const axiosWithAuth = () => {
   const token = localStorage.getItem('token');
