@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchingSchoolsAction, deletingSchoolAction } from '../../actions';
 import School from '../School/School';
-import '../School/School.css';
 
 class Home extends React.Component {
   componentDidMount() {
@@ -23,7 +22,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className="SchoolList">
+      <div className="flex flex-wrap w-full">
         {!this.props.fetchingSchools ? (
           this.props.schools.map(school => (
             <School

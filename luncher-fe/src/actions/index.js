@@ -153,13 +153,30 @@ export const fetchingSchoolsAction = () => dispatch => {
     );
 };
 
-export const addingSchoolAction = newSchool => dispatch => {
+export const addingSchoolAction = ({
+  name,
+  address,
+  funds_required,
+  funds_donated,
+  admin_id,
+}) => async dispatch => {
   dispatch({ type: ADDING_SCHOOL });
-  return axios
-    .post(`${API_URL}/schools`, newSchool, {
-      headers: { Authentication: localStorage.getItem('token') },
+  console.log({
+    name,
+    address,
+    funds_required,
+    funds_donated,
+    admin_id,
+  });
+  return await axiosWithAuth()
+    .post(`/schools`, {
+      name,
+      address,
+      funds_required,
+      admin_id,
+      funds_donated,
     })
-    .then(resp => dispatch({ type: ADDING_SCHOOL_SUCCESS, payload: resp.data }))
+    .then(resp => dispatch({ type: ADDING_SCHOOL_SUCCESS }))
     .catch(err =>
       dispatch({ type: ADDING_SCHOOL_FAILURE, error: err.message })
     );

@@ -20,13 +20,25 @@ const Login = () => {
   return isLoggedIn ? (
     <Redirect to="/" />
   ) : (
-    <div>
-      <button onClick={() => handleLoginOrRegister('login')}>Login</button>{' '}
-      <span> | </span>
-      <button onClick={() => handleLoginOrRegister('register')}>
-        Create Account
-      </button>
-      <LoginRegisterForm isRegistering={isRegistering} />
+    <div className="flex justify-center">
+      <div className="bg-blue-300 mx-1 mt-3 rounded-sm p-1 w-1/2 text-blue-900">
+        <div className="flex justify-center">
+          <button
+            className={!isRegistering && 'underline'}
+            onClick={() => handleLoginOrRegister('login')}
+          >
+            Login
+          </button>{' '}
+          <span className="mx-2"> | </span>
+          <button
+            className={isRegistering && 'underline'}
+            onClick={() => handleLoginOrRegister('register')}
+          >
+            Create Account
+          </button>
+        </div>
+        <LoginRegisterForm isRegistering={isRegistering} />
+      </div>
     </div>
   );
 };
