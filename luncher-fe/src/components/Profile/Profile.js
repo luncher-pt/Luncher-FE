@@ -21,9 +21,7 @@ const Admin = () => {
   return (
     <div>
       {!localStorage.token && <Redirect to="/login" />}
-      <div>Admin</div>
-      <div>My Schools</div>
-      <div>
+      <div className="flex">
         {!fetchingSchools ? (
           mySchools.map(school => (
             <School

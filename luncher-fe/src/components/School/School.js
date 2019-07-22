@@ -1,6 +1,5 @@
 import React, { useState, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
-import './School.css';
 
 import { updatingSchoolAction, deletingSchoolAction } from '../../actions';
 
@@ -44,84 +43,107 @@ function School({
     dispatch(deletingSchoolAction(id));
     setIsEditing(false);
   };
+
+  const schoolItem = `
+  p-2 bg-blue-200 shadow mb-1 rounded-sm
+  `;
+
+  const schoolItemLast = `
+  p-2 bg-blue-200 shadow
+  `;
+
+  const schoolItemInputContainer = `
+  pt-1 bg-blue-200 shadow mb-1 rounded-sm px-2
+  `;
+
+  const schoolItemInput = `
+  bg-blue-100 shadow mb-1 rounded-sm p-1
+  `;
+
   return isLoggedIn ? (
     //For the school admin session
-    <div className="School">
-      {!isEditing ? (
-        <div>
-          <p className="SchoolName">{name}</p>
-          <ul>
-            <li>
+    <div className="bg-blue-300 mx-1 mb-1 rounded-sm p-1 w-full text-blue-900">
+      <div className="">
+        {!isEditing ? (
+          <div>
+            <p className={`${schoolItem} font-bold text-center`}>{name}</p>
+            <p className={schoolItem}>
               <strong>Address: </strong>
               {address}
-            </li>
-            <li>
+            </p>
+            <p className={schoolItem}>
               <strong>Funds Required: </strong>
               {funds_required}
-            </li>
-            <li>
+            </p>
+            <p className={schoolItemLast}>
               <strong>Funds Donated: </strong>
               {funds_donated}
-            </li>
-            <li>
-              <strong>Admin user: </strong>
-              {admin_id}
-            </li>
-          </ul>
-        </div>
-      ) : (
-        <div>
-          <input
-            type="text"
-            name="name"
-            value={schoolInput.name}
-            onChange={handleInput}
-          />
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col">
+            <div
+              className={`${schoolItemInputContainer} flex items-center justify-center `}
+            >
+              <input
+                type="text"
+                name="name"
+                className={schoolItemInput}
+                value={schoolInput.name}
+                onChange={handleInput}
+              />
+            </div>
 
-          <ul>
-            <li>
+            <div className={schoolItemInputContainer}>
               <strong>Address: </strong>
               <input
                 type="text"
+                className={schoolItemInput}
                 value={schoolInput.address}
                 name="address"
                 onChange={handleInput}
               />
-            </li>
-            <li>
+            </div>
+            <div className={schoolItemInputContainer}>
               <strong>Funds Required: </strong>
               <input
                 type="number"
+                className={schoolItemInput}
                 value={schoolInput.funds_required}
                 name="funds_required"
                 onChange={handleInput}
               />
-            </li>
-            <li>
+            </div>
+            <div className={schoolItemInputContainer}>
               <strong>Funds Donated: </strong>
               <input
                 type="number"
+                className={schoolItemInput}
                 value={schoolInput.funds_donated}
                 name="funds_donated"
                 onChange={handleInput}
               />
-            </li>
-          </ul>
-        </div>
-      )}
+            </div>
+          </div>
+        )}
+      </div>
       {userId === admin_id && (
-        <div className="SchoolActions">
-          <p
-            title="Update"
-            className="UpdateButton"
+        <div className="flex w-full">
+          <button
+            title={!isEditing ? 'Edit' : 'Save'}
+            className="flex-grow items-center justify-center cursor-pointer h-10 bg-blue-800 mt-1 text-blue-200 rounded-sm"
             onClick={!isEditing ? () => setIsEditing(true) : handleSave}
           >
             {!isEditing ? 'Edit' : 'Save'}
-          </p>
+          </button>
           {isEditing && (
-            <p title="Delete" className="DeleteButton" onClick={handleDelete}>
+            <button
+              title="Delete"
+              className="flex-grow items-center justify-center cursor-pointer h-10 bg-red-800 mt-1 text-blue-200 ml-1 rounded-sm"
+              onClick={handleDelete}
+            >
               Delete
-            </p>
+            </button>
           )}
         </div>
       )}

@@ -17,10 +17,10 @@ function App() {
     dispatch(checkLogin());
   }, [dispatch]);
   return (
-    <main>
+    <main className="flex flex-col h-full">
       <Router>
         <NavBar />
-        <div>
+        <div className="" style={{ height: 'calc(100% - 55px)' }}>
           <Route exact path="/" component={Home} />
           <Route path="/profile" component={Profile} />
           <Route path="/login" component={Login} />
